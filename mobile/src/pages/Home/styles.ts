@@ -30,15 +30,17 @@ export const styles = StyleSheet.create({
 
   footer: {},
 
-  select: {},
+  selects: {
+    marginBottom: 16,
+  },
 
   input: {
     height: 60,
     backgroundColor: '#FFF',
     borderRadius: 20,
-    marginBottom: 8,
     paddingHorizontal: 24,
     fontSize: 16,
+    color: '#6C6C80',
   },
 
   button: {

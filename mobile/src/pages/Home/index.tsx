@@ -60,11 +60,11 @@ const Home: React.FC = () => {
 
   function handleNavigateToPoints() {
     console.log(selectedState, selectedCity);
-    if (!setSelectedState || !selectedCity) {
+    if (!selectedState || !selectedCity) {
       Alert.alert('Oooooops...', 'Preencha todos os campos');
       return;
     }
-    navigation.navigate('Points');
+    navigation.navigate('Points', { state: selectedState, city: selectedCity });
   }
   return (
     <ImageBackground
@@ -79,33 +79,49 @@ const Home: React.FC = () => {
           Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.
         </Text>
       </View>
+      <View style={styles.selects}>
+        <View
+          style={{
+            borderRadius: 10,
+            overflow: 'hidden',
+            marginBottom: 8,
+          }}
+        >
+          <Picker
+            style={styles.input}
+            selectedValue={selectedState}
+            onValueChange={(state) => {
+              setSelectedState(state);
+            }}
+          >
+            <Picker.Item label="Selecione um estado" value="" />
+            {states.map((state) => {
+              return <Picker.Item key={state} label={state} value={state} />;
+            })}
+          </Picker>
+        </View>
 
-      <Picker
-        style={styles.input}
-        selectedValue={selectedState}
-        onValueChange={(state) => {
-          setSelectedState(state);
-        }}
-      >
-        <Picker.Item label="Selecione um estado" value="" />
-        {states.map((state) => {
-          return <Picker.Item key={state} label={state} value={state} />;
-        })}
-      </Picker>
+        <View
+          style={{
+            borderRadius: 10,
+            overflow: 'hidden',
+          }}
+        >
+          <Picker
+            style={styles.input}
+            selectedValue={selectedCity}
+            onValueChange={(city) => {
+              setSelectedCity(city);
+            }}
+          >
+            <Picker.Item label="Selecione uma cidade" value="" />
 
-      <Picker
-        style={styles.input}
-        selectedValue={selectedCity}
-        onValueChange={(city) => {
-          setSelectedCity(city);
-        }}
-      >
-        <Picker.Item label="Selecione uma cidade" value="" />
-
-        {cities.map((city) => {
-          return <Picker.Item key={city} label={city} value={city} />;
-        })}
-      </Picker>
+            {cities.map((city) => {
+              return <Picker.Item key={city} label={city} value={city} />;
+            })}
+          </Picker>
+        </View>
+      </View>
 
       <RectButton style={styles.button} onPress={handleNavigateToPoints}>
         <View style={styles.buttonIcon}>

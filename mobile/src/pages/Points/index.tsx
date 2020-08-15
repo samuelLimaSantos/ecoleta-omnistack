@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Image, Alert } from 'react-native';
 import { styles } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SvgUri } from 'react-native-svg';
@@ -23,6 +23,11 @@ interface Point {
   longitude: number;
 }
 
+interface Params {
+  city: string;
+  state: string;
+}
+
 const Points: React.FC = () => {
   const { navigate } = useNavigation();
 
@@ -33,6 +38,9 @@ const Points: React.FC = () => {
     0,
     0,
   ]);
+  const route = useRoute();
+
+  const routeParams = route.params as Params;
 
   function handleNavigateToDetail(id: number) {
     navigate('Detail', { point_id: id });
@@ -87,15 +95,15 @@ const Points: React.FC = () => {
     api
       .get('/points', {
         params: {
-          city: 'Recife',
-          uf: 'PE',
-          items: [1, 2],
+          city: routeParams.city,
+          uf: routeParams.state,
+          items: selectedItems,
         },
       })
       .then((response) => {
         setPoints(response.data);
       });
-  }, []);
+  }, [selectedItems]);
 
   return (
     <>
